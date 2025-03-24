@@ -1,0 +1,884 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 230 35% 7%;
+    --foreground: 210 40% 98%;
+
+    --card: 230 35% 7%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 230 35% 7%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 263 90% 65%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 230 25% 12%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 230 25% 12%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 263 90% 65%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 230 25% 15%;
+    --input: 230 25% 15%;
+    --ring: 263 90% 65%;
+  }
+
+  .retro {
+    --background: 0 0% 0%;
+    --foreground: 120 100% 50%;
+    --card: 0 0% 0%;
+    --card-foreground: 120 100% 50%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 120 100% 50%;
+    --primary: 120 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 120 100% 10%;
+    --secondary-foreground: 120 100% 50%;
+    --muted: 120 100% 10%;
+    --muted-foreground: 120 100% 40%;
+    --accent: 120 100% 10%;
+    --accent-foreground: 120 100% 50%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 0%;
+    --border: 120 100% 30%;
+    --input: 120 100% 10%;
+    --ring: 120 100% 50%;
+  }
+
+  /* Ensure retro text is always visible with high contrast */
+  .retro {
+    color: #00ff00 !important;
+  }
+
+  /* Direct color assignments instead of @apply to avoid circular dependencies */
+  .retro .text-green-400 {
+    color: #00ff00 !important;
+  }
+
+  .retro .text-green-500 {
+    color: #00ff00 !important;
+  }
+
+  /* Make sure dropdown menu text is visible in retro mode */
+  .retro .dropdown-menu-content {
+    background-color: black;
+    border: 2px solid #00ff00;
+  }
+
+  .retro .dropdown-menu-item {
+    color: #00ff00;
+  }
+
+  .retro .dropdown-menu-item:hover {
+    background-color: #003300;
+  }
+
+  /* Ensure icons are visible in retro mode */
+  .retro svg {
+    color: #00ff00;
+    stroke: #00ff00;
+    fill: none;
+  }
+
+  .retro button svg {
+    color: #00ff00;
+    stroke: #00ff00;
+    fill: none;
+  }
+
+  .girlypop {
+    --background: 320 100% 97%;
+    --foreground: 320 50% 30%;
+
+    --card: 320 100% 97%;
+    --card-foreground: 320 50% 30%;
+
+    --popover: 320 100% 97%;
+    --popover-foreground: 320 50% 30%;
+
+    --primary: 320 90% 65%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 300 100% 97%;
+    --secondary-foreground: 320 50% 40%;
+
+    --muted: 320 30% 90%;
+    --muted-foreground: 320 50% 50%;
+
+    --accent: 280 90% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 90% 65%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 320 50% 90%;
+    --input: 320 50% 90%;
+    --ring: 320 90% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Apply retro font to everything in retro mode */
+  .retro * {
+    font-family: var(--font-vt323), monospace;
+    letter-spacing: 0.5px;
+  }
+
+  /* Apply cute font to everything in girlypop mode */
+  .girlypop * {
+    font-family: var(--font-poppins), sans-serif;
+    letter-spacing: 0.2px;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
+.retro::-webkit-scrollbar-thumb {
+  background-color: #00aa00;
+  border-radius: 0;
+}
+
+.retro::-webkit-scrollbar-thumb:hover {
+  background-color: #00cc00;
+}
+
+.girlypop::-webkit-scrollbar-thumb {
+  @apply bg-pink-300 rounded-full;
+}
+
+.girlypop::-webkit-scrollbar-thumb:hover {
+  @apply bg-pink-400;
+}
+
+/* Message animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-animation {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Typing indicator animation */
+@keyframes blink {
+  0% {
+    opacity: 0.4;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+.typing-indicator span {
+  animation: blink 1.4s infinite both;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Logo styling */
+.logo-text {
+  @apply font-poppins font-bold;
+}
+
+.logo-ai {
+  @apply text-primary font-bold;
+}
+
+/* Glass effect */
+.glass-effect {
+  @apply bg-black/40 backdrop-blur-md;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.girlypop .glass-effect {
+  @apply bg-white/60 backdrop-blur-md;
+  box-shadow: inset 0 0 0 1px rgba(255, 105, 180, 0.2);
+}
+
+/* Message bubbles */
+.message-bubble {
+  @apply rounded-2xl p-3 shadow-sm;
+}
+
+.dark .message-bubble {
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .message-bubble::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(149, 76, 233, 0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dark .message-bubble:hover::after {
+  opacity: 1;
+}
+
+.user-bubble {
+  @apply bg-primary text-white;
+  border-bottom-right-radius: 0;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.2);
+}
+
+.dark .user-bubble {
+  background: linear-gradient(135deg, hsl(263, 90%, 55%) 0%, hsl(273, 90%, 45%) 100%);
+  border-bottom-right-radius: 0;
+  box-shadow: 0 4px 15px rgba(149, 76, 233, 0.3);
+}
+
+.assistant-bubble {
+  @apply bg-secondary text-gray-200 border border-gray-700;
+  border-bottom-left-radius: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dark .assistant-bubble {
+  background: linear-gradient(135deg, hsl(230, 25%, 12%) 0%, hsl(230, 25%, 10%) 100%);
+  border: 1px solid rgba(149, 76, 233, 0.2);
+  border-bottom-left-radius: 0;
+}
+
+.error-bubble {
+  @apply bg-amber-900/30 text-amber-200 border border-amber-800;
+  border-bottom-left-radius: 0;
+}
+
+/* Girlypop message bubbles */
+.girlypop .user-bubble {
+  @apply bg-primary text-white;
+  border-radius: 18px 18px 4px 18px;
+  box-shadow: 0 4px 15px rgba(243, 104, 224, 0.2);
+}
+
+.girlypop .assistant-bubble {
+  @apply bg-white text-gray-700 border border-pink-200;
+  border-radius: 18px 18px 18px 4px;
+  box-shadow: 0 4px 15px rgba(243, 104, 224, 0.1);
+}
+
+.girlypop .error-bubble {
+  @apply bg-red-100 text-red-600 border border-red-200;
+  border-radius: 18px 18px 18px 4px;
+}
+
+/* Shine effect transitions */
+.shine-effect {
+  transition: all 0.2s ease-out;
+  opacity: 0.95;
+}
+
+/* Shimmer animation for header */
+@keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-bg {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+.girlypop .shimmer-bg {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 159, 243, 0.2) 25%,
+    rgba(255, 159, 243, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Holographic lines effect */
+.holographic-lines {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 2px,
+    transparent 10px
+  );
+  opacity: 0.2;
+}
+
+.girlypop .holographic-lines {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 105, 180, 0.1) 1px,
+    transparent 2px,
+    transparent 10px
+  );
+  opacity: 0.3;
+}
+
+/* Retro theme specific styles */
+.retro-header {
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.retro-text {
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+  color: #00ff00 !important;
+}
+
+/* Girlypop theme specific styles */
+.girlypop-header {
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+}
+
+.girlypop-text {
+  text-shadow: 0 0 5px rgba(255, 105, 180, 0.3);
+}
+
+/* Scanlines effect for retro theme */
+@keyframes scanlines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+.retro-scanlines {
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 255, 0, 0.05) 50%);
+  background-size: 100% 4px;
+  animation: scanlines 8s linear infinite;
+}
+
+/* Sparkles effect for girlypop theme */
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.girlypop-sparkles {
+  background-image: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.8) 0.1%, transparent 0.5%),
+    radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.8) 0.1%, transparent 0.5%),
+    radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.8) 0.1%, transparent 0.5%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.8) 0.1%, transparent 0.5%);
+  background-size: 300% 300%;
+  animation: sparkle 3s ease-in-out infinite alternate;
+}
+
+/* CRT flicker effect */
+@keyframes flicker {
+  0% {
+    opacity: 0.27861;
+  }
+  5% {
+    opacity: 0.34769;
+  }
+  10% {
+    opacity: 0.23604;
+  }
+  15% {
+    opacity: 0.90626;
+  }
+  20% {
+    opacity: 0.18128;
+  }
+  25% {
+    opacity: 0.83891;
+  }
+  30% {
+    opacity: 0.65583;
+  }
+  35% {
+    opacity: 0.67807;
+  }
+  40% {
+    opacity: 0.26559;
+  }
+  45% {
+    opacity: 0.84693;
+  }
+  50% {
+    opacity: 0.96019;
+  }
+  55% {
+    opacity: 0.08594;
+  }
+  60% {
+    opacity: 0.20313;
+  }
+  65% {
+    opacity: 0.71988;
+  }
+  70% {
+    opacity: 0.53455;
+  }
+  75% {
+    opacity: 0.37288;
+  }
+  80% {
+    opacity: 0.71428;
+  }
+  85% {
+    opacity: 0.70419;
+  }
+  90% {
+    opacity: 0.7003;
+  }
+  95% {
+    opacity: 0.36108;
+  }
+  100% {
+    opacity: 0.24387;
+  }
+}
+
+.crt-flicker {
+  background: rgba(0, 255, 0, 0.03);
+  animation: flicker 0.3s infinite;
+  pointer-events: none;
+}
+
+/* Retro message bubbles */
+.retro .message-bubble {
+  border-radius: 0;
+  border: 2px solid #00ff00;
+  box-shadow: none;
+  image-rendering: pixelated;
+}
+
+.retro .user-bubble {
+  background-color: #000000;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  box-shadow: 3px 3px 0 rgba(0, 255, 0, 0.3);
+}
+
+.retro .assistant-bubble {
+  background-color: #000000;
+  color: #00ff00;
+  border: 2px solid #00aa00;
+  box-shadow: 3px 3px 0 rgba(0, 255, 0, 0.3);
+}
+
+.retro .error-bubble {
+  background-color: #000000;
+  color: #ff0000;
+  border: 2px solid #ff0000;
+  box-shadow: 3px 3px 0 rgba(255, 0, 0, 0.3);
+}
+
+/* Retro typing indicator */
+.retro .typing-indicator span {
+  background-color: #00ff00;
+}
+
+/* Girlypop typing indicator */
+.girlypop .typing-indicator span {
+  @apply bg-pink-400 rounded-full;
+}
+
+/* Dark mode typing indicator with glow */
+.dark .typing-indicator span {
+  background: hsl(263, 90%, 65%);
+  box-shadow: 0 0 5px rgba(149, 76, 233, 0.5);
+}
+
+/* Pixel art cursor */
+.retro input,
+.retro textarea {
+  caret-color: #00ff00;
+}
+
+/* Girlypop cursor */
+.girlypop input,
+.girlypop textarea {
+  caret-color: #f368e0;
+}
+
+/* Retro button styles */
+.retro button {
+  border: 2px solid #00ff00;
+  background-color: #000000;
+  color: #00ff00;
+  border-radius: 0;
+  box-shadow: 3px 3px 0 rgba(0, 255, 0, 0.3);
+  transition: all 0.1s;
+}
+
+.retro button:hover:not(:disabled) {
+  background-color: #003300;
+  color: #00ff00;
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 rgba(0, 255, 0, 0.3);
+}
+
+.retro button:active:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 rgba(0, 255, 0, 0.3);
+}
+
+/* Girlypop button styles */
+.girlypop button {
+  @apply rounded-full bg-white text-primary border border-pink-200;
+  box-shadow: 0 4px 10px rgba(243, 104, 224, 0.15);
+  transition: all 0.2s;
+}
+
+.girlypop button:hover:not(:disabled) {
+  @apply bg-pink-50 text-primary-foreground border-pink-300;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(243, 104, 224, 0.2);
+}
+
+.girlypop button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(243, 104, 224, 0.1);
+}
+
+/* Dark mode neon glow effects */
+.dark .btn-primary {
+  background: linear-gradient(135deg, hsl(263, 90%, 65%) 0%, hsl(273, 90%, 55%) 100%);
+  box-shadow: 0 0 15px rgba(149, 76, 233, 0.4);
+  transition: all 0.2s ease;
+}
+
+.dark .btn-primary:hover {
+  background: linear-gradient(135deg, hsl(263, 90%, 70%) 0%, hsl(273, 90%, 60%) 100%);
+  box-shadow: 0 0 20px rgba(149, 76, 233, 0.6);
+  transform: translateY(-2px);
+}
+
+.dark .btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 10px rgba(149, 76, 233, 0.3);
+}
+
+/* Retro form elements */
+.retro input,
+.retro textarea {
+  background-color: #000000;
+  border: 2px solid #00aa00;
+  color: #00ff00;
+  border-radius: 0;
+  box-shadow: inset 0 0 5px rgba(0, 255, 0, 0.3);
+}
+
+.retro input:focus,
+.retro textarea:focus {
+  border-color: #00ff00;
+  outline: none;
+  box-shadow: inset 0 0 8px rgba(0, 255, 0, 0.5);
+}
+
+/* Girlypop form elements */
+.girlypop input,
+.girlypop textarea {
+  @apply bg-white border border-pink-200 text-gray-700 rounded-xl;
+  box-shadow: inset 0 2px 5px rgba(243, 104, 224, 0.05);
+}
+
+.girlypop input:focus,
+.girlypop textarea:focus {
+  @apply border-pink-300 outline-none;
+  box-shadow: inset 0 2px 5px rgba(243, 104, 224, 0.1), 0 0 0 3px rgba(243, 104, 224, 0.1);
+}
+
+/* Dark mode input glow */
+.dark .input-dark:focus {
+  border-color: rgba(149, 76, 233, 0.5);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(149, 76, 233, 0.15);
+}
+
+/* Modern dark mode enhancements */
+.modern-gradient {
+  background: radial-gradient(circle at 50% 0%, hsl(250, 50%, 12%) 0%, hsl(230, 35%, 7%) 50%);
+  position: relative;
+}
+
+.modern-gradient::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 15% 15%, rgba(149, 76, 233, 0.08) 0%, transparent 25%),
+    radial-gradient(circle at 85% 85%, rgba(76, 29, 149, 0.08) 0%, transparent 25%);
+  pointer-events: none;
+}
+
+/* Girlypop gradient */
+.girlypop-gradient {
+  background: linear-gradient(135deg, #fee6f8 0%, #fdf2f9 100%);
+}
+
+/* Dark mode user bubble with gradient */
+.dark .user-bubble {
+  background: linear-gradient(135deg, hsl(263, 90%, 55%) 0%, hsl(273, 90%, 45%) 100%);
+  border-bottom-right-radius: 0;
+  box-shadow: 0 4px 15px rgba(149, 76, 233, 0.3);
+}
+
+.chat-header {
+  background: linear-gradient(to right, rgba(124, 58, 237, 0.1), rgba(79, 70, 229, 0.1));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .chat-header {
+  background: linear-gradient(to right, rgba(149, 76, 233, 0.1), rgba(76, 29, 149, 0.1));
+  border-bottom: 1px solid rgba(149, 76, 233, 0.15);
+  animation: darkHeaderGlow 4s ease-in-out infinite;
+}
+
+.girlypop .chat-header {
+  background: linear-gradient(to right, rgba(243, 104, 224, 0.05), rgba(255, 159, 243, 0.1));
+  border-bottom: 1px solid rgba(243, 104, 224, 0.1);
+}
+
+.chat-footer {
+  background: linear-gradient(to right, rgba(124, 58, 237, 0.05), rgba(79, 70, 229, 0.05));
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .chat-footer {
+  background: linear-gradient(to right, rgba(149, 76, 233, 0.05), rgba(76, 29, 149, 0.05));
+  border-top: 1px solid rgba(149, 76, 233, 0.15);
+}
+
+.girlypop .chat-footer {
+  background: linear-gradient(to right, rgba(243, 104, 224, 0.03), rgba(255, 159, 243, 0.05));
+  border-top: 1px solid rgba(243, 104, 224, 0.1);
+}
+
+.glow-effect {
+  position: relative;
+}
+
+.glow-effect::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-effect:hover::after {
+  opacity: 1;
+}
+
+.girlypop .glow-effect::after {
+  box-shadow: 0 0 20px rgba(243, 104, 224, 0.5);
+}
+
+.input-dark {
+  background: rgba(30, 30, 46, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.input-dark:focus {
+  border-color: rgba(124, 58, 237, 0.5);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(124, 58, 237, 0.25);
+}
+
+.girlypop .input-dark {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(243, 104, 224, 0.2);
+  box-shadow: inset 0 2px 4px rgba(243, 104, 224, 0.05);
+}
+
+.girlypop .input-dark:focus {
+  border-color: rgba(243, 104, 224, 0.5);
+  box-shadow: inset 0 2px 4px rgba(243, 104, 224, 0.05), 0 0 0 2px rgba(243, 104, 224, 0.15);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, hsl(252, 87%, 67%) 0%, hsl(258, 90%, 66%) 100%);
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, hsl(252, 87%, 72%) 0%, hsl(258, 90%, 71%) 100%);
+  box-shadow: 0 6px 15px rgba(124, 58, 237, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 5px rgba(124, 58, 237, 0.2);
+}
+
+.girlypop .btn-primary {
+  background: linear-gradient(135deg, #ff9ff3 0%, #f368e0 100%);
+  box-shadow: 0 4px 10px rgba(243, 104, 224, 0.3);
+}
+
+.girlypop .btn-primary:hover {
+  background: linear-gradient(135deg, #ffc0f3 0%, #f57ce0 100%);
+  box-shadow: 0 6px 15px rgba(243, 104, 224, 0.4);
+}
+
+.girlypop .btn-primary:active {
+  box-shadow: 0 2px 5px rgba(243, 104, 224, 0.2);
+}
+
+/* Subtle animations */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(124, 58, 237, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(124, 58, 237, 0);
+  }
+}
+
+.pulse-animation {
+  animation: pulse 2s infinite;
+}
+
+@keyframes girlypop-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(243, 104, 224, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(243, 104, 224, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(243, 104, 224, 0);
+  }
+}
+
+.girlypop .pulse-animation {
+  animation: girlypop-pulse 2s infinite;
+}
+
+@keyframes darkHeaderGlow {
+  0%,
+  100% {
+    border-color: rgba(149, 76, 233, 0.15);
+  }
+  50% {
+    border-color: rgba(149, 76, 233, 0.3);
+  }
+}
+
+/* Floating hearts animation for girlypop */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.floating-heart {
+  position: absolute;
+  opacity: 0.6;
+  animation: float 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.floating-heart:nth-child(1) {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.floating-heart:nth-child(2) {
+  top: 20%;
+  right: 10%;
+  animation-delay: 0.5s;
+}
+
+.floating-heart:nth-child(3) {
+  bottom: 30%;
+  left: 15%;
+  animation-delay: 1s;
+}
+
+.floating-heart:nth-child(4) {
+  bottom: 20%;
+  right: 15%;
+  animation-delay: 1.5s;
+}
+
