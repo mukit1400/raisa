@@ -1,32 +1,19 @@
 import type React from "react"
 import type { Metadata } from "next"
-import Script from "next/script"
-import { Inter, Poppins, VT323, Press_Start_2P } from "next/font/google"
-import { ThemeProvider } from "@/components/theme-provider"
+import { Inter } from "next/font/google"
 import "./globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
+import { LanguageProvider } from "@/contexts/language-context"
+import { Toaster } from "@/components/ui/toaster"
+import { SEOOptimization } from "@/components/seo-optimization"
 
-// Load fonts
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
-const poppins = Poppins({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
-  variable: "--font-poppins",
-})
-const vt323 = VT323({
-  weight: ["400"],
-  subsets: ["latin"],
-  variable: "--font-vt323",
-})
-const pressStart2P = Press_Start_2P({
-  weight: ["400"],
-  subsets: ["latin"],
-  variable: "--font-press-start-2p",
-})
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "RAIsa - Your Bengali Friend",
-  description: "Chat with your friendly Bengali AI assistant",
-    generator: 'v0.dev'
+  title: "Raisa - Your Bengali AI Friend",
+  description:
+    "Chat with Raisa, Partho, and Rudro - your Bengali AI friends. Practice Bangla, learn about Bangladesh, or just have a friendly conversation.",
+    generator: 'v0.app'
 }
 
 export default function RootLayout({
@@ -36,23 +23,44 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} ${poppins.variable} ${vt323.variable} ${pressStart2P.variable} font-sans antialiased`}
-      >
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-PXD7N0FV3Q"
-          strategy="afterInteractive"
+      <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PXD7N0FV3Q" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-PXD7N0FV3Q');
+            `,
+          }}
         />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-PXD7N0FV3Q');
-          `}
-        </Script>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
-          {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function() {
+              try {
+                const storedTheme = localStorage.getItem('theme');
+                if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (e) {
+                console.error('Error applying theme:', e);
+              }
+            })();
+          `,
+          }}
+        />
+        <SEOOptimization />
+      </head>
+      <body className={inter.className}>
+        <ThemeProvider>
+          <LanguageProvider>
+            {children}
+            <Toaster />
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

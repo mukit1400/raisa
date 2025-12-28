@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
 import { Sparkles } from "lucide-react"
 import { LogoSVG } from "@/components/logo-svg"
+import { GlitchText } from "@/components/glitch-text"
 
 interface GyroShineHeaderProps {
   className?: string
@@ -85,7 +86,6 @@ export function GyroShineHeader({ className }: GyroShineHeaderProps) {
     const constrainedBeta = Math.max(-90, Math.min(90, beta))
 
     // Map to 0-100 range for CSS positioning
-    // Make the effect more responsive by amplifying small movements
     const x = ((gamma + 90) / 180) * 100
     const y = ((constrainedBeta + 90) / 180) * 100
 
@@ -100,27 +100,27 @@ export function GyroShineHeader({ className }: GyroShineHeaderProps) {
 
   if (theme === "dark") {
     // Dark mode - enhanced shine with purple/blue hues
-    primaryGradient = "rgba(149, 76, 233, 0.4)"
-    secondaryGradient = "rgba(76, 29, 149, 0.2)"
-    highlightGradient = "rgba(255, 255, 255, 0.6)"
+    primaryGradient = "rgba(149, 76, 233, 0.3)"
+    secondaryGradient = "rgba(76, 29, 149, 0.15)"
+    highlightGradient = "rgba(255, 255, 255, 0.5)"
     blendMode = "screen"
   } else if (theme === "retro") {
     // Retro mode - green CRT-like glow
-    primaryGradient = "rgba(0, 255, 0, 0.15)"
-    secondaryGradient = "rgba(0, 255, 0, 0.1)"
-    highlightGradient = "rgba(0, 255, 0, 0.2)"
+    primaryGradient = "rgba(0, 255, 0, 0.12)"
+    secondaryGradient = "rgba(0, 255, 0, 0.08)"
+    highlightGradient = "rgba(0, 255, 0, 0.15)"
     blendMode = "screen"
   } else if (theme === "girlypop") {
-    // Girlypop mode - pink/purple pastel glow
-    primaryGradient = "rgba(243, 104, 224, 0.25)"
-    secondaryGradient = "rgba(255, 159, 243, 0.15)"
-    highlightGradient = "rgba(255, 255, 255, 0.5)"
+    // Girlypop mode - more subtle purple glow
+    primaryGradient = "rgba(147, 51, 234, 0.15)"
+    secondaryGradient = "rgba(168, 85, 247, 0.08)"
+    highlightGradient = "rgba(255, 255, 255, 0.3)"
     blendMode = "soft-light"
   } else {
     // Fallback to dark mode
-    primaryGradient = "rgba(124, 58, 237, 0.4)"
-    secondaryGradient = "rgba(79, 70, 229, 0.2)"
-    highlightGradient = "rgba(255, 255, 255, 0.6)"
+    primaryGradient = "rgba(124, 58, 237, 0.3)"
+    secondaryGradient = "rgba(79, 70, 229, 0.15)"
+    highlightGradient = "rgba(255, 255, 255, 0.5)"
     blendMode = "screen"
   }
 
@@ -138,11 +138,11 @@ export function GyroShineHeader({ className }: GyroShineHeaderProps) {
     <header
       ref={headerRef}
       className={cn(
-        "relative h-16 px-6 flex items-center justify-between overflow-hidden",
+        "relative h-16 px-6 flex items-center justify-between overflow-hidden rounded-t-xl",
         theme === "retro"
-          ? "bg-black border-b border-green-500 retro-header"
+          ? "bg-black border-b-2 border-green-500 retro-header"
           : theme === "girlypop"
-            ? "bg-white/80 border-b border-pink-200 girlypop-header"
+            ? "bg-white/90 border-b border-gray-200 girlypop-header"
             : "glass-effect chat-header",
         className,
       )}
@@ -165,16 +165,6 @@ export function GyroShineHeader({ className }: GyroShineHeaderProps) {
       {/* CRT flicker for retro mode */}
       {theme === "retro" && <div className="absolute inset-0 crt-flicker pointer-events-none" />}
 
-      {/* Floating hearts for girlypop mode */}
-      {theme === "girlypop" && (
-        <>
-          <div className="floating-heart absolute text-pink-300 text-2xl">❤</div>
-          <div className="floating-heart absolute text-pink-400 text-xl">❤</div>
-          <div className="floating-heart absolute text-purple-300 text-2xl">❤</div>
-          <div className="floating-heart absolute text-pink-300 text-xl">❤</div>
-        </>
-      )}
-
       {/* Logo */}
       <h1
         className={cn(
@@ -182,7 +172,7 @@ export function GyroShineHeader({ className }: GyroShineHeaderProps) {
           theme === "retro"
             ? "font-mono text-green-500 retro-text"
             : theme === "girlypop"
-              ? "font-poppins text-pink-600 girlypop-text"
+              ? "font-poppins text-purple-600 girlypop-text"
               : "logo-text text-white",
         )}
       >
@@ -200,14 +190,14 @@ export function GyroShineHeader({ className }: GyroShineHeaderProps) {
           </>
         ) : theme === "girlypop" ? (
           <>
-            <span className="font-poppins font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500">
+            <span className="font-poppins font-medium text-purple-600">
               Raisa
+              <span className="text-gray-600 font-normal">AI</span>
             </span>
-            <span className="text-pink-400 ml-1">✨</span>
           </>
         ) : (
           <>
-            P<span className="logo-ai">[AI]</span>rtho
+            Partho <GlitchText text="[AI]" className="text-primary font-bold" intensity="high" />
           </>
         )}
 
@@ -220,7 +210,7 @@ export function GyroShineHeader({ className }: GyroShineHeaderProps) {
               theme === "retro"
                 ? "bg-green-900/40 text-green-500 border border-green-500"
                 : theme === "girlypop"
-                  ? "bg-pink-100 text-pink-500 border border-pink-300"
+                  ? "bg-purple-100 text-purple-500 border border-purple-300"
                   : "bg-primary/20 text-primary border border-primary/30 hover:bg-primary/30 transition-colors",
             )}
           >
@@ -237,4 +227,3 @@ export function GyroShineHeader({ className }: GyroShineHeaderProps) {
     </header>
   )
 }
-
