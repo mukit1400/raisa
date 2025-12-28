@@ -1,5 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
+import Script from "next/script"
 import { Inter, Poppins, VT323, Press_Start_2P } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
@@ -38,6 +39,18 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${poppins.variable} ${vt323.variable} ${pressStart2P.variable} font-sans antialiased`}
       >
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-PXD7N0FV3Q"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-PXD7N0FV3Q');
+          `}
+        </Script>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           {children}
         </ThemeProvider>
@@ -45,7 +58,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-
-
-import './globals.css'
